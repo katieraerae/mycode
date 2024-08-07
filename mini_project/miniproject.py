@@ -33,7 +33,16 @@ def get_gym_recommendation():
 #This is the main function that starts the game
 def main():
     print("Welcome to your Perfect Gym Finder!")
-    get_gym_recommendation() #this calls the function I made above that handles the logic (if else)
+    
+    while True:
+        get_gym_recommendation() #this calls the function I made above that handles the logic (if else)
+
+    #ask after they're done if they want to run it again
+    repeat = input("Would you like to find another gym? (yes/no):").strip().lower()
+
+    if repeat != "yes":
+            print("Thanks for using your Perfect Gym Finder! Goodbye! ")
+            break
 
 if __name__ == "__main__":
     main()
