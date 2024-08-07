@@ -21,12 +21,19 @@ def get_gym_recommendation():
 # gym suggested based on answers ^^^
     if budget == "low" and location == "near" and motivation == "low":
         print("'Peasant Fitness' is the place for you!") 
-
+    elif budget == "high" and location == "far" and motivation == "high":
+        print("'Globo Gym' is the place for you, you Stallion!")
+    elif budget == "low" and location == "near" and motivation == "low":
+        print("'Shark Swim Club' is for you...get treading or die!")
+    elif budget == "high" and location == "far" and motivation == "high":
+        print("Joining 'Caffeine Running Club' is better latte than never!")
+    else:
+        print("You're too cool for a gym! Just go outside!")
 
 #This is the main function that starts the game
 def main():
     print("Welcome to your Perfect Gym Finder!")
-    get_gym_recommendation()
+    get_gym_recommendation() #this calls the function I made above that handles the logic (if else)
 
 if __name__ == "__main__":
     main()
