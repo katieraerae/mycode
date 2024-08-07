@@ -1,8 +1,3 @@
-#Name my gyms and their attributes I want ppl to pick
-#low/high budget
-#close/far from home
-#do you have low motivation/high motivation
-
 gyms = {
     "Peasant Fitness": {"budget": "low", "location": "near", "motivation": "low"},
     "Globo Gym": {"budget": "high", "location": "far", "motivation": "high"},
@@ -18,7 +13,7 @@ def get_gym_recommendation():
     # ask user about motivation low/high
     motivation = input("Is your motivation low or high? (low/high):").strip().lower()
 
-# gym suggested based on answers ^^^
+    # gym suggested based on answers
     if budget == "low" and location == "near" and motivation == "low":
         print("'Peasant Fitness' is the place for you!") 
     elif budget == "high" and location == "far" and motivation == "high":
@@ -30,19 +25,19 @@ def get_gym_recommendation():
     else:
         print("You're too cool for a gym! Just go outside!")
 
-#This is the main function that starts the game
+# This is the main function that starts the game
 def main():
     print("Welcome to your Perfect Gym Finder!")
     
     while True:
-        get_gym_recommendation() #this calls the function I made above that handles the logic (if else)
+        get_gym_recommendation()  # this calls the function that handles the logic (if else)
 
-    #ask after they're done if they want to run it again
-    repeat = input("Would you like to find another gym? (yes/no):").strip().lower()
-
-    if repeat != "yes":
-            print("Thanks for using your Perfect Gym Finder! Goodbye! ")
-            break
+        # ask after they're done if they want to run it again
+        repeat = input("Would you like to find another gym? (yes/no):").strip().lower()
+        if repeat != "yes":
+            print("Thanks for using your Perfect Gym Finder! Goodbye!")
+            break  # if user enters something besides yes, it ends
 
 if __name__ == "__main__":
     main()
+
