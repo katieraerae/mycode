@@ -12,3 +12,6 @@ shutil.copy("5g_research/sdn_network.txt", "5g_research/sdn_network.txt.copy")
 
 # copy the entire directoryA to directoryB
 shutil.copytree("5g_research/", "5g_research_backup/")
+
+
+# Code isn't working but I"ll come back to it. No clue what's wrong but we'll troubleshoot!!!

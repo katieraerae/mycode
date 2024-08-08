@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 ## create file object in "r"ead mode
-with open("vlanconfig.cfg", "r") as configfile:
-    ## readlines() creates a list by reading target
-    ## file line by line
-    configlist = configfile.readlines()
+counter= 0
 
-## file was just auto closed (no more indenting)
+with open("dracula.txt","r") as foo:
+    with open("vampytimex.txt","w") as fang:
+        for line in foo:
+            if "vampire" in line.lower():
+                print(line)
+                counter += 1
+                fang.write(line)
 
-## each item of the list now has the "\n" characters back
-print(configlist)
-
+print(counter)
