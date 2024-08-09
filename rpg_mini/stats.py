@@ -83,7 +83,7 @@ def use_item(player, item):
         #Katie edited
         elif item == 'knife':
             player.strength += 5
-            print("you whip out your knife, increasing your strength by 5.")
+            print("you whip out your knife, increasing your strength by 5 becuase you feel so strong.")
         #Katie is adding this
         elif item == 'sword':
             player.strength += 10
@@ -129,9 +129,9 @@ def combat(player, monster):
         print(f"You attack the monster for {player_attack} damage. Monster health: {monster_health}")
         print(f"The monster attacks you for {monster_attack} damage. Your health: {player_health}")
     #Katie added
-    if player_health <=0:
-        print("You have been defeated by the monster. You are D-E-D DED! Game Over.")
-        break
+        if player_health <=0:
+            print("You have been defeated by the monster. You are D-E-D DED! Game Over.")
+            break
 
     if player_health > 0:
         print("You have defeated the monster!")
@@ -141,6 +141,7 @@ def combat(player, monster):
     else:
         #Katie added this
         player.health = 0 #this is if they died in combat I set it to 0
+        # Not sure if I need the same printed line below this as well????
         print("You have been defeated by the monster. You are D-E-D DED! Game Over.")
  
 def main():
