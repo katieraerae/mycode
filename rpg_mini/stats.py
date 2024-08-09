@@ -35,34 +35,75 @@ rooms = {
     'Hall': {
         'description': "You are in a grand hall with several doors leading in different directions.",
         'items': {'key': "A small rusty key.", 'map': "A map showing the layout of the dungeon."},
-        'exits': {'north': 'Kitchen', 'east': 'Combat Room'}
+        'exits': {'north': 'Kitchen', 'east': 'Combat Room', 'south': 'Library', 'west': 'Pantry'}
     },
     'Kitchen': {
         'description': "You are in a kitchen with a lingering smell of old food. There are pots and pans scattered around.",
         'items': {'knife': "A sharp kitchen knife.", 'apple': "A fresh, red apple."},
-        'exits': {'south': 'Hall'}
+        'exits': {'south': 'Hall', 'east': 'Trapdoor Room'}
     },
     'Trapdoor Room': {
         'description': "You fell through a trapdoor! You can't go back the way you came.",
         'items': {},
-        'exits': {}
+        'exits': {'west': 'Kitchen'}
     },
     'Combat Room': {
         'description': "A dark room where a monster awaits you. Prepare for battle!",
         'items': {},
-        'exits': {'west': 'Hall'}
+        'exits': {'west': 'Hall', 'east': 'Treasure Room'}
+    },
+    'Pantry': {
+        'description': "You are in a small pantry filled with shelves of food and supplies.",
+        'items': {'bread': "A loaf of bread.", 'cheese': "A piece of cheese."},
+        'exits': {'east': 'Hall'}
+    },
+    'Treasure Room': {
+        'description': "A small room glittering with treasure!",
+        'items': {'gold': "A pile of gold coins.", 'jewel': "A sparkling jewel."},
+        'exits': {'west': 'Combat Room'}
+    },
+    'Library': {
+        'description': "You are in a dusty library filled with ancient books.",
+        'items': {'spellbook': "An old spellbook with mysterious symbols."},
+        'exits': {'north': 'Hall', 'east': 'Study'}
+    },
+    'Study': {
+        'description': "You are in a quiet study with a large desk and a flickering candle. Papers are scattered everywhere.",
+        'items': {'letter': "A letter written in an unfamiliar language.", 'quill': "A feathered quill."},
+        'exits': {'west': 'Library'}
     }
 }
  
 def describe_room(room):
-    """Display the description and items in the room."""
-    print(rooms[room]['description'])
-    print("Items in the room:")
-    for item, description in rooms[room]['items'].items():
-        print(f"- {item}: {description}")
+    """Display the description, items, and exits in the current room."""
+    print(f"\n{rooms[room]['description']}")
+    if rooms[room]['items']:
+        print("Items in the room:")
+        for item, description in rooms[room]['items'].items():
+            print(f"- {item}: {description}")
+    else:
+        print("There are no items in this room.")
+ 
     print("Exits:")
     for direction, next_room in rooms[room]['exits'].items():
         print(f"- {direction}: {next_room}")
+    print()  # Add an extra newline for better readability
+ 
+def describe_all_rooms():
+    """Display descriptions and exits for all rooms."""
+    for room_name, room_info in rooms.items():
+        print(f"Room: {room_name}")
+        print(f"Description: {room_info['description']}")
+        if room_info['items']:
+            print("Items in the room:")
+            for item, description in room_info['items'].items():
+                print(f"- {item}: {description}")
+        else:
+            print("There are no items in this room.")
+        print("Exits:")
+        for direction, next_room in room_info['exits'].items():
+            print(f"- {direction}: {next_room}")
+        print()  # Add extra newline between rooms for readability
  
 def pick_up_item(player, room, item):
     """Allow the player to pick up an item and show its description."""
@@ -72,76 +113,73 @@ def pick_up_item(player, room, item):
         print(rooms[room]['items'][item])
     else:
         print("Item not found in the room.")
-#Katie is adding this
+ 
 def use_item(player, item):
-    """Use an item from player's inventory"""
+    """Use an item from the player's inventory."""
     if item in player.inventory:
         if item == 'apple':
             player.health += 10
             player.inventory.remove(item)
-            print("You eat the apple and regain 10 health")
-        #Katie edited
+            print("You eat the apple and regain 10 health.")
         elif item == 'knife':
             player.strength += 5
-            print("you whip out your knife, increasing your strength by 5 becuase you feel so strong.")
-        #Katie is adding this
+            print("You whip out your knife, increasing your strength by 5.")
         elif item == 'sword':
             player.strength += 10
             print("You're so strong with your big sword drawn!")
-        #Katie added
         elif item == 'bread':
             player.speed += 10
-            print("you ate some carbs, increasing your speed by 10.")
-        #Katie added
+            print("You ate some carbs, increasing your speed by 10.")
         elif item == 'cheese':
             player.health -= 5
-            print("you ate some cheese, but you're lactose intolerant, decreasing your health by 5.")
-        #Katie added
+            print("You ate some cheese, but you're lactose intolerant, decreasing your health by 5.")
         elif item == 'spellbook':
             player.intelligence += 20
             player.strength -= 5
-            print("you learned a new spell, increasing your intelligence by 20, but it was alot of brain power so your mental strength decreased by 5.")
-        #Katie added all of these
+            print("You learned a new spell, increasing your intelligence by 20, but it took a lot of mental effort, decreasing your strength by 5.")
         elif item == 'gold':
             print("You feel the gold in your pocket and smile.")
         elif item == 'jewel':
-            print("You feel the jewel in your pocket and say 'myyyyyy precious', looking around you, paranoid.")
+            print("You feel the jewel in your pocket and say 'my precious', looking around, paranoid.")
         elif item == 'letter':
             player.strength += 5
-            print("You read a bunch of gibberish on one of the letters, but can make out the words 'easteregg' and 'boss fight' and that motivates you, increasing your strength by 5.")
-        #K again
+            print("You read some gibberish on the letter, but it motivates you, increasing your strength by 5.")
         elif item == 'quill':
-            print("You whip out your quill to fight! But it's useless. Don't worry.f Everything quill be alright.")
+            print("Don't worry, every little thing quill be alright.")
         else:
             print(f"{item} can't be used right now.")
     else:
-        print("You don't have that item in your inventory.")      
+        print("You don't have that item in your inventory.")
  
 def combat(player, monster):
     """Engage in combat between the player and a monster."""
     player_health = player.health
     monster_health = monster['health']
+ 
     while player_health > 0 and monster_health > 0:
-        player_attack = random.randint(1, player.strength)
+        if 'sword' in player.inventory:
+            player_attack = random.randint(10, player.strength + 10)
+            print("You wield your sword and prepare for battle!")
+        else:
+            player_attack = random.randint(1, player.strength)
         monster_attack = random.randint(1, 20)
         monster_health -= player_attack
         player_health -= monster_attack
+ 
         print(f"You attack the monster for {player_attack} damage. Monster health: {monster_health}")
         print(f"The monster attacks you for {monster_attack} damage. Your health: {player_health}")
-    #Katie added
-        if player_health <=0:
+ 
+        if player_health <= 0:
             print("You have been defeated by the monster. You are D-E-D DED! Game Over.")
             break
-
+ 
     if player_health > 0:
         print("You have defeated the monster!")
         player.experience += 50
         if player.experience >= player.level * 100:
             player.level_up()
     else:
-        #Katie added this
-        player.health = 0 #this is if they died in combat I set it to 0
-        # Not sure if I need the same printed line below this as well????
+        player.health = 0  # Set health to 0 if the player dies
         print("You have been defeated by the monster. You are D-E-D DED! Game Over.")
  
 def main():
@@ -152,7 +190,9 @@ def main():
     print("Type 'look' to see the room description.")
     print("Type 'go <direction>' to move to a different room.")
     print("Type 'get <item>' to pick up an item.")
+    print("Type 'use <item>' to use an item from your inventory.")
     print("Type 'stats' to see your stats.")
+    print("Type 'map' to see an overview of all rooms.")
     print("Type 'quit' to exit the game.")
  
     while True:
@@ -164,6 +204,8 @@ def main():
  
         if action == 'look':
             describe_room(current_room)
+        elif action == 'map':
+            describe_all_rooms()
         elif action == 'go':
             if len(command) < 2:
                 print("Go where?")
@@ -182,7 +224,6 @@ def main():
                 continue
             item = command[1]
             pick_up_item(player, current_room, item)
-        #Katie is adding this USE
         elif action == 'use':
             if len(command) < 2:
                 print("Use what?")
